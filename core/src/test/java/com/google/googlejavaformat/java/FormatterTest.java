@@ -450,9 +450,9 @@ public final class FormatterTest {
 
     // Just fixing imports preserves whitespace around imports.
     assertThat(RemoveUnusedImports.removeUnusedImports(withBlank)).isEqualTo(withBlank);
-    assertThat(ImportOrderer.reorderImports(withBlank, Style.GOOGLE)).isEqualTo(withBlank);
+    assertThat(ImportOrderer.reorderImports(withBlank, Style.ALCHEMY)).isEqualTo(withBlank);
     assertThat(RemoveUnusedImports.removeUnusedImports(withoutBlank)).isEqualTo(withoutBlank);
-    assertThat(ImportOrderer.reorderImports(withoutBlank, Style.GOOGLE)).isEqualTo(withoutBlank);
+    assertThat(ImportOrderer.reorderImports(withoutBlank, Style.ALCHEMY)).isEqualTo(withoutBlank);
   }
 
   @Test

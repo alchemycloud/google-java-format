@@ -59,7 +59,7 @@ public class ImportOrderer {
    */
   @Deprecated
   public static String reorderImports(String text) throws FormatterException {
-    return reorderImports(text, Style.GOOGLE);
+    return reorderImports(text, Style.ALCHEMY);
   }
 
   private String reorderImports() throws FormatterException {
@@ -172,12 +172,9 @@ public class ImportOrderer {
     this.text = text;
     this.toks = toks;
     this.lineSeparator = Newlines.guessLineSeparator(text);
-    if (style.equals(Style.GOOGLE)) {
+    if (style.equals(Style.ALCHEMY)) {
       this.importComparator = GOOGLE_IMPORT_COMPARATOR;
       this.shouldInsertBlankLineFn = ImportOrderer::shouldInsertBlankLineGoogle;
-    } else if (style.equals(Style.AOSP)) {
-      this.importComparator = AOSP_IMPORT_COMPARATOR;
-      this.shouldInsertBlankLineFn = ImportOrderer::shouldInsertBlankLineAosp;
     } else {
       throw new IllegalArgumentException("Unsupported code style: " + style);
     }

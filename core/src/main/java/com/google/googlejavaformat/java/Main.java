@@ -97,7 +97,7 @@ public final class Main {
 
     JavaFormatterOptions options =
         JavaFormatterOptions.builder()
-            .style(parameters.aosp() ? Style.AOSP : Style.GOOGLE)
+            .style(Style.ALCHEMY)
             .formatJavadoc(parameters.formatJavadoc())
             .build();
 

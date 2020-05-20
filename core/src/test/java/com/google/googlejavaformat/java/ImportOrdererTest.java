@@ -537,7 +537,7 @@ public class ImportOrdererTest {
     @Test
     public void reorder() throws FormatterException {
       try {
-        String output = ImportOrderer.reorderImports(input, Style.GOOGLE);
+        String output = ImportOrderer.reorderImports(input, Style.ALCHEMY);
         assertWithMessage("Expected exception").that(reordered).doesNotMatch("^!!");
         assertWithMessage(input).that(output).isEqualTo(reordered);
       } catch (FormatterException e) {
@@ -809,7 +809,7 @@ public class ImportOrdererTest {
     @Test
     public void reorder() throws FormatterException {
       try {
-        String output = ImportOrderer.reorderImports(input, Style.AOSP);
+        String output = ImportOrderer.reorderImports(input, Style.ALCHEMY);
         assertWithMessage("Expected exception").that(reordered).doesNotMatch("^!!");
         assertWithMessage(input).that(output).isEqualTo(reordered);
       } catch (FormatterException e) {
