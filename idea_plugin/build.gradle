@@ -32,7 +32,7 @@ apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
 
 intellij {
-    pluginName = "google-java-format"
+    pluginName = "alchemy-google-java-format"
     version = "2020.1"
 }
 
@@ -52,5 +52,5 @@ sourceSets {
 }
 
 dependencies {
-    compile "com.google.googlejavaformat:google-java-format:${googleJavaFormatVersion}"
+    compile "com.google.googlejavaformat:alchemy-google-java-format:${googleJavaFormatVersion}"
 }
