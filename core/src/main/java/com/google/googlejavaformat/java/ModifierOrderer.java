@@ -44,34 +44,21 @@ final class ModifierOrderer {
     if (kind == null) {
       return null;
     }
-    switch (kind) {
-      case PUBLIC:
-        return Modifier.PUBLIC;
-      case PROTECTED:
-        return Modifier.PROTECTED;
-      case PRIVATE:
-        return Modifier.PRIVATE;
-      case ABSTRACT:
-        return Modifier.ABSTRACT;
-      case STATIC:
-        return Modifier.STATIC;
-      case DEFAULT:
-        return Modifier.DEFAULT;
-      case FINAL:
-        return Modifier.FINAL;
-      case TRANSIENT:
-        return Modifier.TRANSIENT;
-      case VOLATILE:
-        return Modifier.VOLATILE;
-      case SYNCHRONIZED:
-        return Modifier.SYNCHRONIZED;
-      case NATIVE:
-        return Modifier.NATIVE;
-      case STRICTFP:
-        return Modifier.STRICTFP;
-      default:
-        return null;
-    }
+    return switch (kind) {
+      case PUBLIC -> Modifier.PUBLIC;
+      case PROTECTED -> Modifier.PROTECTED;
+      case PRIVATE -> Modifier.PRIVATE;
+      case ABSTRACT -> Modifier.ABSTRACT;
+      case STATIC -> Modifier.STATIC;
+      case DEFAULT -> Modifier.DEFAULT;
+      case FINAL -> Modifier.FINAL;
+      case TRANSIENT -> Modifier.TRANSIENT;
+      case VOLATILE -> Modifier.VOLATILE;
+      case SYNCHRONIZED -> Modifier.SYNCHRONIZED;
+      case NATIVE -> Modifier.NATIVE;
+      case STRICTFP -> Modifier.STRICTFP;
+      default -> null;
+    };
   }
 
   /** Reorders all modifiers in the given text to be in JLS order. */
