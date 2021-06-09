@@ -35,8 +35,6 @@ import com.intellij.util.ThrowableRunnable;
 import java.util.Collection;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-
-
 /**
  * Decorates the {@link CodeStyleManager} abstract class by delegating to a concrete implementation
  * instance (likely IJ's default instance).
@@ -215,9 +213,7 @@ class CodeStyleManagerDecorator extends CodeStyleManager
 
   // From FormattingModeAwareIndentAdjuster
 
-  /**
-   * Uses same fallback as {@link CodeStyleManager#getCurrentFormattingMode}.
-   */
+  /** Uses same fallback as {@link CodeStyleManager#getCurrentFormattingMode}. */
   @Override
   public FormattingMode getCurrentFormattingMode() {
     if (delegate instanceof FormattingModeAwareIndentAdjuster) {
