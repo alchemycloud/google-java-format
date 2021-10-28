@@ -36,20 +36,20 @@ intellij {
 }
 
 patchPluginXml {
-    pluginDescription = "Formats source code using the google-java-format tool. This version of " +
-            "the plugin uses version ${googleJavaFormatVersion} of the tool."
-    version = "${googleJavaFormatVersion}.0"
-    sinceBuild = '201'
-    untilBuild = ''
+  pluginDescription = "Formats source code using the google-java-format tool. This version of " +
+                      "the plugin uses version ${googleJavaFormatVersion} of the tool."
+  version = "${googleJavaFormatVersion}.0"
+  sinceBuild = '201'
+  untilBuild = ''
 }
 
 sourceSets {
-    main {
-        java.srcDir 'src'
-        resources.srcDir 'resources'
-    }
+  main {
+    java.srcDir 'src'
+    resources.srcDir 'resources'
+  }
 }
 
 dependencies {
-    compile "com.google.googlejavaformat:alchemy-google-java-format:${googleJavaFormatVersion}"
+  compile "com.google.googlejavaformat:alchemy-google-java-format:${googleJavaFormatVersion}"
 }
