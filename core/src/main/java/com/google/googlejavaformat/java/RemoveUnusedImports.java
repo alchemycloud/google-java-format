@@ -16,6 +16,7 @@
 
 package com.google.googlejavaformat.java;
 
+import static java.lang.Math.max;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.google.common.base.CharMatcher;
@@ -145,7 +146,9 @@ public class RemoveUnusedImports {
       public Void visitReference(ReferenceTree referenceTree, Void unused) {
         DCReference reference = (DCReference) referenceTree;
         long basePos =
-            reference.getSourcePosition((DCTree.DCDocComment) getCurrentPath().getDocComment());
+            reference
+                .pos((DCTree.DCDocComment) getCurrentPath().getDocComment())
+                .getStartPosition();
         // the position of trees inside the reference node aren't stored, but the qualifier's
         // start position is the beginning of the reference node
         if (reference.qualifierExpression != null) {
@@ -247,7 +250,7 @@ public class RemoveUnusedImports {
       }
       // delete the import
       int endPosition = importTree.getEndPosition(unit.endPositions);
-      endPosition = Math.max(CharMatcher.isNot(' ').indexIn(contents, endPosition), endPosition);
+      endPosition = max(CharMatcher.isNot(' ').indexIn(contents, endPosition), endPosition);
       String sep = Newlines.guessLineSeparator(contents);
       if (endPosition + sep.length() < contents.length()
           && contents.subSequence(endPosition, endPosition + sep.length()).toString().equals(sep)) {
