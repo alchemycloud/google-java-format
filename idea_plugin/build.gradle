@@ -15,13 +15,11 @@
  */
 
 plugins {
-  id "java"
   id "org.jetbrains.intellij" version "0.7.2"
 }
 
 repositories {
-    mavenLocal()
-    mavenCentral()
+  mavenCentral()
 }
 
 ext {
@@ -32,8 +30,8 @@ apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
 
 intellij {
-    pluginName = "google-java-format"
-    version = "2020.2"
+  pluginName = "google-java-format"
+  version = "211.6693.65-EAP-SNAPSHOT"
 }
 
 patchPluginXml {
@@ -44,13 +42,17 @@ patchPluginXml {
   untilBuild = ''
 }
 
+publishPlugin {
+  token = project.ext.properties.jetbrainsPluginRepoToken
+}
+
 sourceSets {
-    main {
-        java.srcDir 'src'
-        resources.srcDir 'resources'
-    }
+  main {
+    java.srcDir 'src'
+    resources.srcDir 'resources'
+  }
 }
 
 dependencies {
-    compile "com.google.googlejavaformat:google-java-format:${googleJavaFormatVersion}"
+  compile "com.google.googlejavaformat:google-java-format:${googleJavaFormatVersion}"
 }
