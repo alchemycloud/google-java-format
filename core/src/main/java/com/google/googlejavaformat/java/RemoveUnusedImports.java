@@ -118,31 +118,6 @@ public class RemoveUnusedImports {
       return null;
     }
 
-    // TODO(cushon): remove this override when pattern matching in switch is no longer a preview
-    // feature, and TreePathScanner visits CaseTree#getLabels instead of CaseTree#getExpressions
-    @SuppressWarnings("unchecked") // reflection
-    @Override
-    public Void visitCase(CaseTree tree, Void unused) {
-      if (CASE_TREE_GET_LABELS != null) {
-        try {
-          scan((List<? extends Tree>) CASE_TREE_GET_LABELS.invoke(tree), null);
-        } catch (ReflectiveOperationException e) {
-          throw new LinkageError(e.getMessage(), e);
-        }
-      }
-      return super.visitCase(tree, null);
-    }
-
-    private static final Method CASE_TREE_GET_LABELS = caseTreeGetLabels();
-
-    private static Method caseTreeGetLabels() {
-      try {
-        return CaseTree.class.getMethod("getLabels");
-      } catch (NoSuchMethodException e) {
-        return null;
-      }
-    }
-
     @Override
     public Void scan(Tree tree, Void unused) {
       if (tree == null) {
