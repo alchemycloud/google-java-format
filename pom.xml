@@ -23,11 +23,11 @@
   <groupId>com.google.googlejavaformat</groupId>
   <artifactId>google-java-format-parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.9.1</version>
+  <version>1.10.0</version>
 
   <modules>
     <module>core</module>
-    <module>eclipse_plugin</module>
+<!--    <module>eclipse_plugin</module>-->
   </modules>
 
   <name>Google Java Format Parent</name>
