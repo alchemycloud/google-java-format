@@ -73,7 +73,7 @@ public abstract class JavaFormatterOptions {
   /** Returns a builder for {@link JavaFormatterOptions}. */
   public static Builder builder() {
     return new AutoValue_JavaFormatterOptions.Builder()
-        .style(Style.GOOGLE)
+        .style(Style.ALCHEMY)
         .formatJavadoc(true)
         .reorderModifiers(true);
   }
