@@ -248,7 +248,7 @@ public class RemoveUnusedImports {
       Set<String> usedNames,
       Multimap<String, Range<Integer>> usedInJavadoc) {
     RangeMap<Integer, String> replacements = TreeRangeMap.create();
-    for (JCImport importTree : unit.getImports()) {
+    for (JCTree importTree : unit.getImports()) {
       String simpleName = getSimpleName(importTree);
       if (!isUnused(unit, usedNames, usedInJavadoc, importTree, simpleName)) {
         continue;
@@ -266,7 +266,7 @@ public class RemoveUnusedImports {
     return replacements;
   }
 
-  private static String getSimpleName(JCImport importTree) {
+  private static String getSimpleName(JCTree importTree) {
     return getQualifiedIdentifier(importTree).getIdentifier().toString();
   }
 
@@ -274,7 +274,7 @@ public class RemoveUnusedImports {
       JCCompilationUnit unit,
       Set<String> usedNames,
       Multimap<String, Range<Integer>> usedInJavadoc,
-      JCImport importTree,
+      JCTree importTree,
       String simpleName) {
     JCFieldAccess qualifiedIdentifier = getQualifiedIdentifier(importTree);
     String qualifier = qualifiedIdentifier.getExpression().toString();
@@ -297,7 +297,7 @@ public class RemoveUnusedImports {
     return true;
   }
 
-  private static JCFieldAccess getQualifiedIdentifier(JCImport importTree) {
+  private static JCFieldAccess getQualifiedIdentifier(JCTree importTree) {
     // Use reflection because the return type is JCTree in some versions and JCFieldAccess in others
     try {
       return (JCFieldAccess) JCImport.class.getMethod("getQualifiedIdentifier").invoke(importTree);
