@@ -16,17 +16,18 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.google.googlejavaformat</groupId>
   <artifactId>google-java-format-parent</artifactId>
   <packaging>pom</packaging>
-  <version>HEAD-SNAPSHOT</version>
+  <version>1.11.1</version>
 
   <modules>
     <module>core</module>
+<!--    <module>eclipse_plugin</module>-->
   </modules>
 
   <name>Google Java Format Parent</name>
@@ -85,14 +86,14 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>1.21</java.version>
-    <guava.version>32.1.1-jre</guava.version>
-    <truth.version>1.1.3</truth.version>
-    <checker.version>3.21.2</checker.version>
-    <errorprone.version>2.16</errorprone.version>
+    <java.version>1.17</java.version>
+    <guava.version>32.1.3-jre</guava.version>
+    <truth.version>1.4.0</truth.version>
+    <jspecify.version>1.0.0</jspecify.version>
+    <errorprone.version>2.37.0</errorprone.version>
     <auto-value.version>1.9</auto-value.version>
     <auto-service.version>1.0.1</auto-service.version>
-    <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
+    <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
   </properties>
 
@@ -107,9 +108,9 @@
 
       <!-- Compile-time dependencies -->
       <dependency>
-        <groupId>org.checkerframework</groupId>
-        <artifactId>checker-qual</artifactId>
-        <version>${checker.version}</version>
+        <groupId>org.jspecify</groupId>
+        <artifactId>jspecify</artifactId>
+        <version>${jspecify.version}</version>
       </dependency>
       <dependency>
         <groupId>com.google.errorprone</groupId>
@@ -172,7 +173,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>${maven-javadoc-plugin.version}</version>
         </plugin>
         <plugin>
           <artifactId>maven-gpg-plugin</artifactId>
@@ -196,6 +197,7 @@
           <compilerArgs>
             <!-- compile-time arguments for google-java-format -->
             <arg>-XDcompilePolicy=simple</arg>
+            <arg>--should-stop=ifError=FLOW</arg>
             <arg>-Xplugin:ErrorProne</arg>
             <arg>--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>
             <arg>--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
@@ -260,7 +262,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.4.0</version>
+        <version>${maven-javadoc-plugin.version}</version>
         <configuration>
           <doclint>none</doclint>
         </configuration>

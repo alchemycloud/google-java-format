@@ -22,10 +22,10 @@
   <parent>
     <groupId>com.google.googlejavaformat</groupId>
     <artifactId>google-java-format-parent</artifactId>
-  <version>HEAD-SNAPSHOT</version>
+    <version>1.11.1</version>
   </parent>
 
-  <artifactId>google-java-format</artifactId>
+  <artifactId>alchemy-google-java-format</artifactId>
 
   <name>Google Java Format</name>
 
@@ -42,8 +42,8 @@
 
     <!-- Compile-time dependencies -->
     <dependency>
-      <groupId>org.checkerframework</groupId>
-      <artifactId>checker-qual</artifactId>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -93,13 +93,13 @@
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <source>21</source>
+          <source>17</source>
           <encoding>UTF-8</encoding>
           <docencoding>UTF-8</docencoding>
           <charset>UTF-8</charset>
           <links>
             <link>https://guava.dev/releases/${guava.version}/api/docs/</link>
-            <link>https://docs.oracle.com/en/java/javase/21/docs/api</link>
+            <link>https://docs.oracle.com/en/java/javase/17/docs/api</link>
           </links>
           <additionalJOptions>
             <additionalJOption>--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED,com.google.googlejavaformat</additionalJOption>
@@ -215,8 +215,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>21</source>
-          <target>21</target>
+          <source>17</source>
+          <target>17</target>
         </configuration>
       </plugin>
     </plugins>
@@ -224,9 +224,9 @@
 
   <profiles>
     <profile>
-      <id>jdk11</id>
+      <id>jdk17</id>
       <activation>
-        <jdk>(,17)</jdk>
+        <jdk>[17,21)</jdk>
       </activation>
       <build>
         <plugins>
@@ -235,14 +235,14 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>**/Java17InputAstVisitor.java</exclude>
+                <exclude>**/Java21InputAstVisitor.java</exclude>
               </excludes>
             </configuration>
           </plugin>
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
             <configuration>
-              <excludePackageNames>com.google.googlejavaformat.java.java17</excludePackageNames>
+              <excludePackageNames>com.google.googlejavaformat.java.java21</excludePackageNames>
             </configuration>
           </plugin>
         </plugins>
@@ -255,13 +255,13 @@
           <plugin>
             <groupId>org.graalvm.buildtools</groupId>
             <artifactId>native-maven-plugin</artifactId>
-            <version>0.9.13</version>
+            <version>0.10.0</version>
             <extensions>true</extensions>
             <executions>
               <execution>
                 <id>build-native</id>
                 <goals>
-                  <goal>build</goal>
+                  <goal>compile-no-fork</goal>
                 </goals>
                 <phase>package</phase>
               </execution>
@@ -279,9 +279,20 @@
                 <param>${project.build.directory}/${project.artifactId}-${project.version}-all-deps.jar</param>
               </classpath>
               <buildArgs>
+                <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
                 <buildArg>-H:IncludeResourceBundles=com.sun.tools.javac.resources.compiler</buildArg>
+                <buildArg>-H:IncludeResourceBundles=com.sun.tools.javac.resources.javac</buildArg>
                 <buildArg>--no-fallback</buildArg>
                 <buildArg>--initialize-at-build-time=com.sun.tools.javac.file.Locations</buildArg>
+                <buildArg>-H:+ReportExceptionStackTraces</buildArg>
+                <buildArg>-H:-UseContainerSupport</buildArg>
+                <buildArg>-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</buildArg>
+                <buildArg>-J--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</buildArg>
+                <buildArg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</buildArg>
+                <buildArg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</buildArg>
+                <buildArg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</buildArg>
+                <buildArg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</buildArg>
+                <buildArg>-march=compatibility</buildArg>
               </buildArgs>
             </configuration>
           </plugin>

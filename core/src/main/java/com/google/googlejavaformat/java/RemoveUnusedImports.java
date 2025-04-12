@@ -117,31 +117,6 @@ public class RemoveUnusedImports {
       return null;
     }
 
-    // TODO(cushon): remove this override when pattern matching in switch is no longer a preview
-    // feature, and TreePathScanner visits CaseTree#getLabels instead of CaseTree#getExpressions
-    @SuppressWarnings("unchecked") // reflection
-    @Override
-    public Void visitCase(CaseTree tree, Void unused) {
-      if (CASE_TREE_GET_LABELS != null) {
-        try {
-          scan((List<? extends Tree>) CASE_TREE_GET_LABELS.invoke(tree), null);
-        } catch (ReflectiveOperationException e) {
-          throw new LinkageError(e.getMessage(), e);
-        }
-      }
-      return super.visitCase(tree, null);
-    }
-
-    private static final Method CASE_TREE_GET_LABELS = caseTreeGetLabels();
-
-    private static Method caseTreeGetLabels() {
-      try {
-        return CaseTree.class.getMethod("getLabels");
-      } catch (NoSuchMethodException e) {
-        return null;
-      }
-    }
-
     @Override
     public Void scan(Tree tree, Void unused) {
       if (tree == null) {
@@ -273,7 +248,7 @@ public class RemoveUnusedImports {
       Set<String> usedNames,
       Multimap<String, Range<Integer>> usedInJavadoc) {
     RangeMap<Integer, String> replacements = TreeRangeMap.create();
-    for (JCImport importTree : unit.getImports()) {
+    for (JCTree importTree : unit.getImports()) {
       String simpleName = getSimpleName(importTree);
       if (!isUnused(unit, usedNames, usedInJavadoc, importTree, simpleName)) {
         continue;
@@ -291,7 +266,7 @@ public class RemoveUnusedImports {
     return replacements;
   }
 
-  private static String getSimpleName(JCImport importTree) {
+  private static String getSimpleName(JCTree importTree) {
     return getQualifiedIdentifier(importTree).getIdentifier().toString();
   }
 
@@ -299,7 +274,7 @@ public class RemoveUnusedImports {
       JCCompilationUnit unit,
       Set<String> usedNames,
       Multimap<String, Range<Integer>> usedInJavadoc,
-      JCImport importTree,
+      JCTree importTree,
       String simpleName) {
     JCFieldAccess qualifiedIdentifier = getQualifiedIdentifier(importTree);
     String qualifier = qualifiedIdentifier.getExpression().toString();
@@ -322,7 +297,7 @@ public class RemoveUnusedImports {
     return true;
   }
 
-  private static JCFieldAccess getQualifiedIdentifier(JCImport importTree) {
+  private static JCFieldAccess getQualifiedIdentifier(JCTree importTree) {
     // Use reflection because the return type is JCTree in some versions and JCFieldAccess in others
     try {
       return (JCFieldAccess) JCImport.class.getMethod("getQualifiedIdentifier").invoke(importTree);

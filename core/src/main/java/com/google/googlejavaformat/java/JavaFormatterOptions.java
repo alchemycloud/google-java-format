@@ -32,11 +32,15 @@ import com.google.errorprone.annotations.Immutable;
 public abstract class JavaFormatterOptions {
 
   public enum Style {
-    /** The default Google Java Style configuration. */
-    GOOGLE(1),
 
-    /** The AOSP-compliant configuration. */
-    AOSP(2);
+    /** The default Google Java Style configuration. */
+    ALCHEMY(2);
+
+//    /** The default Google Java Style configuration. */
+//    GOOGLE(1),
+//
+//    /** The AOSP-compliant configuration. */
+//    AOSP(2);
 
     private final int indentationMultiplier;
 
@@ -69,7 +73,7 @@ public abstract class JavaFormatterOptions {
   /** Returns a builder for {@link JavaFormatterOptions}. */
   public static Builder builder() {
     return new AutoValue_JavaFormatterOptions.Builder()
-        .style(Style.GOOGLE)
+        .style(Style.ALCHEMY)
         .formatJavadoc(true)
         .reorderModifiers(true);
   }
@@ -77,6 +81,8 @@ public abstract class JavaFormatterOptions {
   /** A builder for {@link JavaFormatterOptions}. */
   @AutoValue.Builder
   public abstract static class Builder {
+    private Style style = Style.ALCHEMY;
+    private boolean formatJavadoc = true;
 
     public abstract Builder style(Style style);
 

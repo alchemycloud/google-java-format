@@ -23,8 +23,9 @@ import java.util.Objects;
 
 /** Configuration options for the formatting style. */
 enum UiFormatterStyle {
-  GOOGLE("Default Google Java style", Style.GOOGLE),
-  AOSP("Android Open Source Project (AOSP) style", Style.AOSP);
+//  GOOGLE("Default Google Java style", Style.GOOGLE),
+//  AOSP("Android Open Source Project (AOSP) style", Style.AOSP);
+  ALCHEMY("Default Alchemy Java style", Style.ALCHEMY);
 
   private final String description;
   private final JavaFormatterOptions.Style style;

@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
  */
 public final class JavadocFormatter {
 
-  static final int MAX_LINE_LENGTH = 100;
+  static final int MAX_LINE_LENGTH = 160;
 
   /**
    * Formats the given Javadoc comment, which must start with ∕✱✱ and end with ✱∕. The output will
@@ -65,6 +65,12 @@ public final class JavadocFormatter {
           return output.toString();
         case FOOTER_JAVADOC_TAG_START:
           output.writeFooterJavadocTagStart(token);
+          break;
+        case SNIPPET_BEGIN:
+          output.writeSnippetBegin(token);
+          break;
+        case SNIPPET_END:
+          output.writeSnippetEnd(token);
           break;
         case LIST_OPEN_TAG:
           output.writeListOpen(token);
