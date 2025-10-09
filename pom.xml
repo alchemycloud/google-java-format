@@ -20,14 +20,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.google.googlejavaformat</groupId>
-  <artifactId>google-java-format-parent</artifactId>
+  <groupId>alchemy-com.google.googlejavaformat</groupId>
+  <artifactId>alchemy-google-java-format-parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.11.1</version>
+  <version>HEAD-SNAPSHOT</version>
 
   <modules>
     <module>core</module>
-<!--    <module>eclipse_plugin</module>-->
   </modules>
 
   <name>Google Java Format Parent</name>
