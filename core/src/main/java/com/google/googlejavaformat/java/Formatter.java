@@ -150,14 +150,7 @@ public final class Formatter {
     }
     OpsBuilder builder = new OpsBuilder(javaInput, javaOutput);
     // Output the compilation unit.
-    JavaInputAstVisitor visitor;
-    if (Runtime.version().feature() >= 21) {
-      visitor =
-          createVisitor(
-              "com.google.googlejavaformat.java.java21.Java21InputAstVisitor", builder, options);
-    } else {
-      visitor = new JavaInputAstVisitor(builder, options.indentationMultiplier());
-    }
+    JavaInputAstVisitor visitor = new JavaInputAstVisitor(builder, options.indentationMultiplier());
     visitor.scan(unit, null);
     builder.sync(javaInput.getText().length());
     builder.drain();
@@ -167,31 +160,13 @@ public final class Formatter {
     javaOutput.flush();
   }
 
-  private static JavaInputAstVisitor createVisitor(
-      final String className, final OpsBuilder builder, final JavaFormatterOptions options) {
-    try {
-      return Class.forName(className)
-          .asSubclass(JavaInputAstVisitor.class)
-          .getConstructor(OpsBuilder.class, int.class)
-          .newInstance(builder, options.indentationMultiplier());
-    } catch (ReflectiveOperationException e) {
-      throw new LinkageError(e.getMessage(), e);
-    }
-  }
-
   static boolean errorDiagnostic(Diagnostic<?> input) {
     if (input.getKind() != Diagnostic.Kind.ERROR) {
       return false;
     }
-    switch (input.getCode()) {
-      case "compiler.err.invalid.meth.decl.ret.type.req":
-        // accept constructor-like method declarations that don't match the name of their
-        // enclosing class
-        return false;
-      default:
-        break;
-    }
-    return true;
+    // accept constructor-like method declarations that don't match the name of their
+    // enclosing class
+    return !input.getCode().equals("compiler.err.invalid.meth.decl.ret.type.req");
   }
 
   /**
